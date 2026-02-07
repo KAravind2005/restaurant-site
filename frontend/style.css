@@ -1,0 +1,157 @@
+/* ======================
+   RESET
+====================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+}
+
+/* ======================
+   NAVBAR
+====================== */
+nav {
+  background: #111;
+  color: white;
+  padding: 15px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+}
+
+/* ======================
+   HERO (HOME)
+====================== */
+.hero {
+  height: 90vh;
+  background: url("./images/hero.jpeg") center/cover no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.hero .btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 22px;
+  background: #f5b400;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ================= MENU ================= */
+
+.menu {
+  padding: 60px 30px;
+  text-align: center;
+}
+
+.menu-grid {
+  margin-top: 40px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 180px; /* ⭐ IMPORTANT FIX */
+  object-fit: cover; /* ⭐ FIX STRETCHING */
+
+  border-radius: 8px;
+}
+
+.card h3 {
+  margin-top: 10px;
+}
+
+.card p {
+  color: #f5b400;
+  font-weight: bold;
+}
+
+/* ======================
+   CONTACT
+====================== */
+.contact-section {
+  min-height: 90vh;
+
+  display: flex;
+  flex-direction: column; /* ⭐ MUST */
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-form {
+  width: 100%;
+  max-width: 420px;
+
+  display: flex;
+  flex-direction: column; /* ⭐ MUST */
+
+  gap: 15px;
+
+  padding: 25px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.contact-form button {
+  padding: 12px;
+  background: #f5b400;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ======================
+   MOBILE
+====================== */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+  }
+}

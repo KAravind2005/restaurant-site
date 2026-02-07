@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Admin Dashboard</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+        padding: 40px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        margin: 0;
+      }
+      h2 {
+        margin: 5px 0 20px;
+        color: gray;
+      }
+
+      #count {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      #loading {
+        color: #007bff;
+        font-weight: bold;
+        display: none;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+      }
+
+      th {
+        background: #f0f0f0;
+      }
+
+      button {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #refreshBtn {
+        background: #007bff;
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .deleteBtn {
+        background: #dc3545;
+        color: white;
+      }
+
+      .empty {
+        text-align: center;
+        color: gray;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>📋 Contact Messages</h1>
+      <h2>Admin Dashboard</h2>
+
+      <p id="count">Total messages: 0</p>
+      <p id="loading">Loading...</p>
+
+      <input id="search" placeholder="Search name or phone..." ></input>
+
+      <button id="refreshBtn">Refresh</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Message</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <script>
+const API = "http://127.0.0.1:5000/contacts";
+
+const tbody = document.getElementById("tbody");
+const refreshBtn = document.getElementById("refreshBtn");
+const loading = document.getElementById("loading");
+const count = document.getElementById("count");
+const searchInput = document.getElementById("search");
+
+let allData = [];
+
+refreshBtn.addEventListener("click", loadContacts);
+searchInput.addEventListener("input", handleSearch);
+
+
+async function loadContacts() {
+  loading.style.display = "block";
+
+  const res = await fetch(API);
+  const result = await res.json();
+
+  allData = result.data;
+
+  renderTable(allData);
+}
+
+
+function renderTable(data) {
+  loading.style.display = "none";
+  tbody.innerHTML = "";
+
+  count.innerText = "Total messages: " + data.length;
+
+  if (data.length === 0) {
+    tbody.innerHTML =
+      "<tr><td colspan='4' class='empty'>No messages yet</td></tr>";
+    return;
+  }
+
+  data.forEach(c => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${c.name}</td>
+      <td>${c.phone}</td>
+      <td>${c.message}</td>
+      <td>
+        <button class="deleteBtn" data-id="${c._id}">Delete</button>
+      </td>
+    `;
+
+    tbody.appendChild(row);
+  });
+}
+
+
+function handleSearch() {
+  const value = searchInput.value.toLowerCase();
+
+  const filtered = allData.filter(c =>
+    c.name.toLowerCase().includes(value) ||
+    c.phone.includes(value)
+  );
+
+  renderTable(filtered);
+}
+
+
+tbody.addEventListener("click", async (e) => {
+  if (!e.target.classList.contains("deleteBtn")) return;
+
+  const id = e.target.dataset.id;
+
+  if (!confirm("Delete this message?")) return;
+
+  await fetch(API + "/" + id, { method: "DELETE" });
+
+  loadContacts();
+});
+
+
+loadContacts();
+</script>
+  </body>
+</html>
