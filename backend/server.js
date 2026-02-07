@@ -1,3 +1,4 @@
+console.log("Starting server...");``
 import connectDB from "./config/db.js";
 import Contact from "./models/Contact.js";
 import cors from "cors";
