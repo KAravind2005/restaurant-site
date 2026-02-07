@@ -1,8 +1,8 @@
-const connectDB = require("./config/db");
-const Contact = require("./models/Contact");
-const cors = require("cors");
+import connectDB from "./config/db.js";
+import Contact from "./models/Contact.js";
+import cors from "cors";
 
-const express = require("express");
+import express from "express";
 
 const app = express();
 app.use(cors());
