@@ -1,15 +1,19 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 
-app.use(cors({
-  origin: [
-    "https://restaurant-site-brown.vercel.app",
-    "http://localhost:3000",
-    "http://localhost:5500"
-  ],
-  methods: ["GET", "POST"],
-  credentials: true
-}));
+const app = express(); // ✅ CREATE FIRST
+
+app.use(
+  cors({
+    origin: [
+      "https://restaurant-site-brown.vercel.app",
+      "http://localhost:3000",
+      "http://localhost:5500",
+    ],
+    methods: ["GET", "POST"],
+  }),
+);
 
 app.use(express.json());
 
