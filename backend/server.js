@@ -1,7 +1,12 @@
 const express = require("express");
-require("dotenv").config();
 const cors = require("cors");
+require("dotenv").config();
+
+const app = express();
+
 app.use(cors());
+app.use(express.json());
+
 
 console.log("MONGO_URI from env:", process.env.MONGO_URI);
 
@@ -12,10 +17,8 @@ const Contact = require("./models/Contact");
 const mongoose = require("mongoose");
 
 dotenv.config();
-const app = express();
 connectDB();
 
-app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Backend working 🚀");
