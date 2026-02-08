@@ -1,10 +1,15 @@
-console.log("Starting server...");``
-import connectDB from "./config/db.js";
-import Contact from "./models/Contact.js";
-import cors from "cors";
+require("dotenv").config();
+console.log("MONGO_URI from env:", process.env.MONGO_URI);
 
-import express from "express";
+console.log("Starting server...");
+const express = require("express");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+const Contact = require("./models/Contact");
+const cors = require("cors");
+const mongoose = require("mongoose");
 
+dotenv.config();
 const app = express();
 app.use(cors());
 connectDB();

@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+const contactSchema = new mongoose.Schema(
+  {
+    name: String,
+    phone: String,
+    message: String,
+  },
+  { timestamps: true },
+);
 
-const contactSchema = new mongoose.Schema({
-  name: String,
-  phone: String,
-  message: String
-}, { timestamps: true });
-
-const Contact = mongoose.model("Contact", contactSchema);
-
-export default Contact;
+module.exports = mongoose.model("Contact", contactSchema);
