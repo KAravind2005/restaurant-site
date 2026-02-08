@@ -1,16 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 
-const app = express();
-
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-  }),
-);
+app.use(cors({
+  origin: [
+    "https://restaurant-site-brown.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:5500"
+  ],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
 
 app.use(express.json());
 
