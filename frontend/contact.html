@@ -42,7 +42,7 @@
         const phone = form.elements.phone.value;
         const message = form.elements.message.value;
 
-        const res = await fetch("http://localhost:5000/contact", {
+        const res = await fetch("https://restaurant-api-60br.onrender.com/api/contact", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
