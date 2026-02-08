@@ -42,13 +42,16 @@
         const phone = form.elements.phone.value;
         const message = form.elements.message.value;
 
-        const res = await fetch("https://restaurant-api-60br.onrender.com/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        const res = await fetch(
+          "https://restaurant-api-60br.onrender.com/contact",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, phone, message }),
           },
-          body: JSON.stringify({ name, phone, message }),
-        });
+        );
 
         const data = await res.json();
 
