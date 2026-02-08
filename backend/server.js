@@ -4,9 +4,15 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  }),
+);
 
+app.use(express.json());
 
 console.log("MONGO_URI from env:", process.env.MONGO_URI);
 
@@ -18,7 +24,6 @@ const mongoose = require("mongoose");
 
 dotenv.config();
 connectDB();
-
 
 app.get("/", (req, res) => {
   res.send("Backend working 🚀");
