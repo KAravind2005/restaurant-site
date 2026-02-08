@@ -1,17 +1,18 @@
+const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
+app.use(cors());
+
 console.log("MONGO_URI from env:", process.env.MONGO_URI);
 
 console.log("Starting server...");
-const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const Contact = require("./models/Contact");
-const cors = require("cors");
 const mongoose = require("mongoose");
 
 dotenv.config();
 const app = express();
-app.use(cors());
 connectDB();
 
 app.use(express.json());
