@@ -13,7 +13,7 @@ const mongoose = require("mongoose");
 app.use(
   cors({
     origin: "*",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
