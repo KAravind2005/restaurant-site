@@ -57,32 +57,29 @@ app.post("/contact", authMiddleware, async (req, res) => {
   }
 });
 
-app.get("/contacts", async (req, res) => {
+app.get("/contacts", authMiddleware, async (req, res) => {
   try {
-    const contacts = await Contact.find();
+    const contacts = await Contact.find().sort({ createdAt: -1 });
 
     res.json({
       success: true,
-      data: contacts,
+      contacts,
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      message: "Error fetching contacts",
+    });
   }
 });
 
-app.get("/contacts", async (req, res) => {
-  try {
-    const contacts = await Contact.find().sort({ createdAt: -1 });
-    res.json(contacts);
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching contacts" });
-  }
-});
-
-app.delete("/contacts/:id", async (req, res) => {
+app.delete("/contacts/:id", authMiddleware, async (req, res) => {
   try {
     await Contact.findByIdAndDelete(req.params.id);
-    res.json({ message: "Deleted successfully" });
+
+    res.json({
+      success: true,
+      message: "Contact deleted successfully",
+    });
   } catch (err) {
     res.status(500).json({ message: "Delete failed" });
   }

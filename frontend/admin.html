@@ -108,8 +108,12 @@
     </div>
 
     <script>
+      const token = localStorage.getItem("token");
+if (!token) {
+  window.location.href = "login.html";
+}
+      
 const API = "http://127.0.0.1:5000/contacts";
-
 const tbody = document.getElementById("tbody");
 const refreshBtn = document.getElementById("refreshBtn");
 const loading = document.getElementById("loading");
@@ -125,10 +129,16 @@ searchInput.addEventListener("input", handleSearch);
 async function loadContacts() {
   loading.style.display = "block";
 
-  const res = await fetch(API);
+  const token = localStorage.getItem("token");
+  const res = await fetch(API, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
   const result = await res.json();
 
-  allData = result.data;
+  allData = result.contacts;
 
   renderTable(allData);
 }
@@ -182,7 +192,11 @@ tbody.addEventListener("click", async (e) => {
 
   if (!confirm("Delete this message?")) return;
 
-  await fetch(API + "/" + id, { method: "DELETE" });
+  await fetch(API + "/" + id, { method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+   });
 
   loadContacts();
 });
