@@ -4,44 +4,56 @@ require("dotenv").config();
 
 const app = express(); // ✅ CREATE FIRST
 
+const connectDB = require("./config/db");
+const Contact = require("./models/Contact");
+const authRoutes = require("./routes/authRoutes");
+const authMiddleware = require("./middleware/authMiddleware");
+const mongoose = require("mongoose");
+
 app.use(
   cors({
-    origin: [
-      "https://restaurant-site-brown.vercel.app",
-      "http://localhost:3000",
-      "http://localhost:5500",
-    ],
+    origin: "*",
     methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
 app.use(express.json());
+app.use("/api/auth", authRoutes);
 
 console.log("MONGO_URI from env:", process.env.MONGO_URI);
 
 console.log("Starting server...");
-const dotenv = require("dotenv");
-const connectDB = require("./config/db");
-const Contact = require("./models/Contact");
-const mongoose = require("mongoose");
 
-dotenv.config();
 connectDB();
 
 app.get("/", (req, res) => {
   res.send("Backend working 🚀");
 });
 
-app.post("/contact", async (req, res) => {
+app.post("/contact", authMiddleware, async (req, res) => {
   try {
-    const { name, phone, message } = req.body;
-    const newContact = new Contact({ name, phone, message });
+    console.log("BODY", req.body);
+    const { name, email, phone, message } = req.body;
+
+    const newContact = new Contact({
+      name,
+      email,
+      phone,
+      message,
+    });
     await newContact.save();
 
-    res.json({ success: true, message: "saved to database successfully" });
+    res.json({
+      success: true,
+      message: "Saved to database successfully",
+    });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "Server error" });
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 });
 
