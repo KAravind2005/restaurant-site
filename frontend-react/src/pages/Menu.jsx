@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
 
 function Menu() {
-
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    fetch("http://localhost:5000/api/menu")
-      .then(res => res.json())
-      .then(data => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/menu`)
+      .then((res) => res.json())
+      .then((data) => {
         setMenu(data);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         setLoading(false);
       });
-
   }, []);
 
   if (loading) {
@@ -26,27 +23,19 @@ function Menu() {
 
   return (
     <div className="menu-container">
-
       <h1>Our Menu</h1>
 
       <div className="menu-grid">
-
         {menu.map((item) => (
-
           <div className="menu-card" key={item._id}>
-
             <img src={item.image} alt={item.name} />
 
             <h3>{item.name}</h3>
 
             <p>₹{item.price}</p>
-
           </div>
-
         ))}
-
       </div>
-
     </div>
   );
 }
