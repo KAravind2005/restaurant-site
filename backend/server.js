@@ -9,7 +9,8 @@ const Contact = require("./models/Contact");
 const authRoutes = require("./routes/authRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
 const mongoose = require("mongoose");
-
+const menuRoutes = require("./routes/menu");
+const contactRoutes = require("./routes/contactRoutes");
 app.use(
   cors({
     origin: "*",
@@ -20,6 +21,8 @@ app.use(
 
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/menu", menuRoutes);
+app.use("/api/contacts", contactRoutes);
 
 console.log("MONGO_URI from env:", process.env.MONGO_URI);
 
@@ -31,9 +34,8 @@ app.get("/", (req, res) => {
   res.send("Backend working 🚀");
 });
 
-app.post("/contact", authMiddleware, async (req, res) => {
+app.post("/api/contacts", async (req, res) => {
   try {
-    console.log("BODY", req.body);
     const { name, email, phone, message } = req.body;
 
     const newContact = new Contact({
@@ -44,10 +46,7 @@ app.post("/contact", authMiddleware, async (req, res) => {
     });
     await newContact.save();
 
-    res.json({
-      success: true,
-      message: "Saved to database successfully",
-    });
+    res.status(201).json(newContact);
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -56,23 +55,17 @@ app.post("/contact", authMiddleware, async (req, res) => {
     });
   }
 });
-
-app.get("/contacts", authMiddleware, async (req, res) => {
+app.get("/api/contacts", async (req, res) => {
   try {
-    const contacts = await Contact.find().sort({ createdAt: -1 });
-
-    res.json({
-      success: true,
-      contacts,
-    });
+    const contacts = await Contact.find(); // REMOVE user filter
+    res.json(contacts);
   } catch (err) {
-    res.status(500).json({
-      message: "Error fetching contacts",
-    });
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
   }
 });
 
-app.delete("/contacts/:id", authMiddleware, async (req, res) => {
+app.delete("/api/contacts/:id", authMiddleware, async (req, res) => {
   try {
     await Contact.findByIdAndDelete(req.params.id);
 
