@@ -9,7 +9,7 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch("http://localhost:5000/api/contacts", {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/contacts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
