@@ -21,7 +21,7 @@ app.use(
 
 app.use(express.json());
 app.use("/api/auth", authRoutes);
-app.use("/api/menu", menuRoutes);
+app.use("/menu", menuRoutes);
 app.use("/api/contacts", contactRoutes);
 
 console.log("MONGO_URI from env:", process.env.MONGO_URI);
