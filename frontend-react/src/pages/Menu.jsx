@@ -5,7 +5,7 @@ function Menu() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/menu`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/menu`)
       .then((res) => res.json())
       .then((data) => {
         setMenu(data);
@@ -28,11 +28,7 @@ function Menu() {
       <div className="menu-grid">
         {menu.map((item) => (
           <div className="menu-card" key={item._id}>
-            <img
-              src={item.image}
-              alt={item.name}
-              className="menu-image"
-            />
+            <img src={item.image} alt={item.name} className="menu-image" />
 
             <h3>{item.name}</h3>
 
