@@ -1,16 +1,29 @@
-const express = require("express");
-const cors = require("cors");
-require("dotenv").config();
+// const express = require("express");
+import express from "express";
+// const cors = require("cors");
+import cors from "cors";
+// require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express(); // ✅ CREATE FIRST
 
-const connectDB = require("./config/db");
-const Contact = require("./models/Contact");
-const authRoutes = require("./routes/authRoutes");
-const authMiddleware = require("./middleware/authMiddleware");
-const mongoose = require("mongoose");
-const menuRoutes = require("./routes/menu");
-const contactRoutes = require("./routes/contactRoutes");
+// const connectDB = require("./config/db");
+// const Contact = require("./models/Contact");
+// const authRoutes = require("./routes/authRoutes");
+// const authMiddleware = require("./middleware/authMiddleware");
+// const mongoose = require("mongoose");
+// const menuRoutes = require("./routes/menu");
+// const contactRoutes = require("./routes/contactRoutes");
+
+import connectDB from "./config/db.js";
+import Contact from "./models/Contact.js";
+import authRoutes from "./routes/authRoutes.js";
+import authMiddleware from "./middleware/authMiddleware.js";
+import mongoose from "mongoose";
+import menuRoutes from "./routes/menu.js";
+import contactRoutes from "./routes/contactRoutes.js";
+
 app.use(
   cors({
     origin: "*",
@@ -27,9 +40,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
 app.use("/images", express.static(path.join(__dirname, "images")));
-
 
 app.use("/api/auth", authRoutes);
 app.use("/menu", menuRoutes);
