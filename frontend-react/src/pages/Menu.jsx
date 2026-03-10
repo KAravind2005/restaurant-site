@@ -6,14 +6,26 @@ function Menu() {
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/menu`)
-      .then((res) => res.json())
+      .then(async (res) => {
+        // wait for server if it wakes up
+        if (!res.ok) {
+          throw new Error("API not ready yet");
+        }
+
+        const data = await res.json();
+        return data;
+      })
       .then((data) => {
         setMenu(data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
-        setLoading(false);
+        console.log("Server waking up, retrying...");
+
+        // retry after 3 seconds
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       });
   }, []);
 
