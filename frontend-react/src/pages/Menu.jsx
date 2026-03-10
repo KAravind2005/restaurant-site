@@ -48,7 +48,7 @@ useEffect(() => {
         {menu.map((item) => (
           <div className="menu-card" key={item._id}>
             <img
-              src={`${import.meta.env.VITE_API_URL}${item.image}`}
+              src={item.image}
               alt={item.name}
               className="menu-image"
             />
