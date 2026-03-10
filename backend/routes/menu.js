@@ -21,7 +21,7 @@ const menu = [
   {
     name: "Masala Dosa",
     price: 260,
-    image: "/images/masala dosa.jpeg"
+    image: "/images/masala-dosa.jpeg"
   }
 ];
 

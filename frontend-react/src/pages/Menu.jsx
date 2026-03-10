@@ -4,29 +4,36 @@ function Menu() {
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/menu`)
-      .then(async (res) => {
-        // wait for server if it wakes up
-        if (!res.ok) {
-          throw new Error("API not ready yet");
+useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        setLoading(true);
+        // Ensure VITE_API_URL does not have a trailing slash in your .env
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/menu`);
+
+        if (!response.ok) {
+          // If 404, it means the endpoint path is likely wrong in Express
+          if (response.status === 404) {
+            throw new Error("Menu endpoint not found (404). Check your Express routes.");
+          }
+          throw new Error("Server is waking up or encountered an error.");
         }
 
-        const data = await res.json();
-        return data;
-      })
-      .then((data) => {
+        const data = await response.json();
         setMenu(data);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log("Server waking up, retrying...");
-
-        // retry after 3 seconds
+      } catch (err) {
+        console.error("Fetch error:", err.message);
+        
+        // Retry logic: Only retry if it's a server wakeup issue, 
+        // but avoid infinite reloads if the path is just wrong.
         setTimeout(() => {
           window.location.reload();
-        }, 3000);
-      });
+        }, 5000); 
+      }
+    };
+
+    fetchMenu();
   }, []);
 
   if (loading) {

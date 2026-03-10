@@ -5,14 +5,6 @@ dotenv.config();
 
 const app = express(); // ✅ CREATE FIRST
 
-// const connectDB = require("./config/db");
-// const Contact = require("./models/Contact");
-// const authRoutes = require("./routes/authRoutes");
-// const authMiddleware = require("./middleware/authMiddleware");
-// const mongoose = require("mongoose");
-// const menuRoutes = require("./routes/menu");
-// const contactRoutes = require("./routes/contactRoutes");
-
 import connectDB from "./config/db.js";
 import Contact from "./models/Contact.js";
 import authRoutes from "./routes/authRoutes.js";
