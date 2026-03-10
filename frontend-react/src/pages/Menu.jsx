@@ -5,7 +5,7 @@ function Menu() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/menu`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/menu`)
       .then(async (res) => {
         // wait for server if it wakes up
         if (!res.ok) {
