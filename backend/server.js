@@ -20,6 +20,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use("/images", express.static("images"));
 app.use("/api/auth", authRoutes);
 app.use("/menu", menuRoutes);
 app.use("/api/contacts", contactRoutes);
