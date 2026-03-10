@@ -40,7 +40,11 @@ function Menu() {
       <div className="menu-grid">
         {menu.map((item) => (
           <div className="menu-card" key={item._id}>
-            <img src={item.image} alt={item.name} className="menu-image" />
+            <img
+              src={`${import.meta.env.VITE_API_URL}${item.image}`}
+              alt={item.name}
+              className="menu-image"
+            />
 
             <h3>{item.name}</h3>
 
