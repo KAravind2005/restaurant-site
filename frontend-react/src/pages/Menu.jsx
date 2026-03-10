@@ -28,7 +28,7 @@ function Menu() {
       <div className="menu-grid">
         {menu.map((item) => (
           <div className="menu-card" key={item._id}>
-            <img src={item.image} alt={item.name} />
+            <img src={`/images/${item.image.split('/').pop()}`} alt={item.name} />
 
             <h3>{item.name}</h3>
 
